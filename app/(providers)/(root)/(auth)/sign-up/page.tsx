@@ -1,9 +1,15 @@
 "use client";
 
+import { Database } from "@/database.types";
+import { supabase } from "@/supabase/client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Page from "../../_components/Page";
 
 function SignUpPage() {
+  const router = useRouter();
+
   // 입력 내용 저장
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
@@ -11,7 +17,7 @@ function SignUpPage() {
   const [checkUserPassword, setCheckUserPassword] = useState("");
 
   // 회원가입 로직
-  const handleClickSignUpButton = (e: any) => {
+  const handleClickSignUpButton = async (e: any) => {
     e.preventDefault();
     // 에러 메세지
     let errorMessage = "";
@@ -34,8 +40,30 @@ function SignUpPage() {
       return;
     }
 
-    // 모든 조건이 충족된 경우 회원가입 로직 실행
-    console.log("회원가입 성공!");
+    // 조건을 만족하면 db에 저장하기
+    const signUp = await supabase.auth.signUp({
+      email: userEmail,
+      password: userPassword,
+      options: { data: { display_name: userName } },
+    });
+
+    const user = await supabase.auth.getUser();
+    if (!user) return;
+
+    const id = user.data.user!.id;
+
+    const data: Database["public"]["Tables"]["users"]["Insert"] = {
+      userId: id,
+      userName,
+      userEmail,
+    };
+
+    const { error } = await supabase.from("users").insert(data);
+    console.log(error);
+    toast.success("회원가입에 성공 하셨습니다.");
+
+    if (!signUp.data.user) return toast.error("로그인에 실패 하였습니다.");
+    router.push("/");
   };
 
   return (
