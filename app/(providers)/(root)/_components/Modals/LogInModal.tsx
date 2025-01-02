@@ -75,7 +75,7 @@ function LogInModal() {
   return (
     <>
       <div
-        className="absolute top-[50%] left-[50%] w-[500px] h-[530px] bg-rhythmBlack -translate-x-[50%] -translate-y-[50%] rounded-2xl text-white bg-black opacity-100"
+        className="absolute top-[50%] left-[50%] w-[500px] h-[530px] bg-black -translate-x-[50%] -translate-y-[50%] rounded-2xl text-white opacity-100"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-center mt-10 font-semibold text-3xl">로그인</h2>
@@ -90,7 +90,7 @@ function LogInModal() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block border w-[400px] px-6 py-3 rounded focus:border-black outline-none transition border-slate-300 text-black"
+              className="block border w-[400px] px-6 py-3 rounded focus:border-blue-500 outline-none transition border-slate-300 text-black"
             />
           </div>
 
@@ -101,11 +101,11 @@ function LogInModal() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block border w-[400px] px-6 py-3 rounded focus:border-black outline-none transition border-slate-300 text-black"
+              className="block border w-[400px] px-6 py-3 rounded focus:border-blue-500 outline-none transition border-slate-300 text-black"
             />
           </div>
 
-          <button className="border border-white bg-rhythmBlack text-white w-[400px] h-[60px] mt-5 hover:-translate-y-2 transition-all">
+          <button className="border border-white bg-blue-600 text-white w-[400px] h-[60px] mt-5 hover:-translate-y-2 transition-all">
             로그인하기
           </button>
         </form>

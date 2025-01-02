@@ -41,7 +41,7 @@ function SignUpPage() {
   return (
     <Page title="회원가입 페이지">
       <form
-        className="w-[500px] h-auto p-8 bg-gray-900 text-white rounded-lg shadow-lg space-y-6 mx-56 mt-12"
+        className="w-[500px] h-auto p-8 bg-black text-gray-200 rounded-lg shadow-lg space-y-6 mx-[213px] mt-12 font-bold"
         onSubmit={handleClickSignUpButton}
       >
         <div className="flex flex-col space-y-2">
@@ -110,7 +110,7 @@ function SignUpPage() {
 
         <button
           type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full py-2 bg-blue-900 text-white rounded-md text-sm font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           회원가입
         </button>
