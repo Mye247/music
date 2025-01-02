@@ -1,7 +1,5 @@
+import Page from "./_components/Page";
+
 export default function HomePage() {
-  return (
-    <div>
-      <h1>hh</h1>
-    </div>
-  );
+  return <Page title="메인 페이지 입니다.">하이요</Page>;
 }
