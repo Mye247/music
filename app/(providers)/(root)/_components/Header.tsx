@@ -7,6 +7,7 @@ import { useModalStore } from "@/zustand/modalStore";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import LogInModal from "./Modals/LogInModal";
 
 function Header() {
@@ -25,6 +26,7 @@ function Header() {
 
   // 로그아웃
   const handleClickLogOutButton = async () => {
+    toast.info("로그아웃 하셨습니다.");
     await supabase.auth.signOut();
     logOut();
   };
@@ -39,7 +41,7 @@ function Header() {
   }, []);
 
   return (
-    <header className="min-w-full bg-cyan-100 min-h-[80px] flex items-center justify-between">
+    <header className="min-w-full bg-cyan-700 min-h-[80px] flex items-center justify-between">
       <Link href={"/"}>
         <h1 className="pl-5 font-bold text-xl">music 서비스 (커뮤니티)</h1>
       </Link>

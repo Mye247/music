@@ -21,7 +21,7 @@ function AuthProvider({ children }: PropsWithChildren) {
 
       setAuthInitialized();
     });
-  }, []);
+  }, [setAuthInitialized]);
   return children;
 }
 

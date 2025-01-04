@@ -25,15 +25,7 @@ function LogInModal() {
     closeModal();
   };
 
-  const toastComment = (
-    <div>
-      일반 계정으로 로그인 하셨습니다!
-      <br />
-      노래 재생 및 플레이 리스트 만들기 및
-      <br />
-      일부 기능이 제한됩니다.
-    </div>
-  );
+  const toastComment = <div>로그인에 성공하셨습니다.</div>;
 
   const notify = () =>
     toast.info(toastComment, {

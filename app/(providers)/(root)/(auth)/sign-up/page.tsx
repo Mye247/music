@@ -69,7 +69,7 @@ function SignUpPage() {
   return (
     <Page title="회원가입 페이지">
       <form
-        className="w-[500px] h-auto p-8 bg-black text-gray-200 rounded-lg shadow-lg space-y-6 mx-[213px] mt-12 font-bold"
+        className="w-[500px] p-8 bg-black text-gray-200 rounded-lg shadow-lg space-y-6 mx-[213px] font-bold"
         onSubmit={handleClickSignUpButton}
       >
         <div className="flex flex-col space-y-2">
