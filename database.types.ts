@@ -9,6 +9,68 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      comment: {
+        Row: {
+          content: string
+          createdAt: string
+          id: number
+          postId: number
+          userId: string | null
+        }
+        Insert: {
+          content: string
+          createdAt?: string
+          id?: number
+          postId: number
+          userId?: string | null
+        }
+        Update: {
+          content?: string
+          createdAt?: string
+          id?: number
+          postId?: number
+          userId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_postId_fkey"
+            columns: ["postId"]
+            isOneToOne: false
+            referencedRelation: "community"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community: {
+        Row: {
+          bed: number | null
+          content: string
+          createdAt: string
+          good: number
+          id: number
+          title: string
+          userId: string | null
+        }
+        Insert: {
+          bed?: number | null
+          content: string
+          createdAt?: string
+          good?: number
+          id?: number
+          title: string
+          userId?: string | null
+        }
+        Update: {
+          bed?: number | null
+          content?: string
+          createdAt?: string
+          good?: number
+          id?: number
+          title?: string
+          userId?: string | null
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           createdAt: string
@@ -17,7 +79,7 @@ export type Database = {
           userId: string
           userIntroduction: string
           userName: string
-          userProfileImage: string
+          userProfileImage: string | null
         }
         Insert: {
           createdAt?: string
@@ -26,7 +88,7 @@ export type Database = {
           userId: string
           userIntroduction?: string
           userName: string
-          userProfileImage?: string
+          userProfileImage?: string | null
         }
         Update: {
           createdAt?: string
@@ -35,7 +97,7 @@ export type Database = {
           userId?: string
           userIntroduction?: string
           userName?: string
-          userProfileImage?: string
+          userProfileImage?: string | null
         }
         Relationships: []
       }
