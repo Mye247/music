@@ -38,7 +38,7 @@ function Header() {
       setLoginUser(getUser);
     };
     loginUserData();
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <header className="min-w-full bg-cyan-700 min-h-[80px] flex items-center justify-between">

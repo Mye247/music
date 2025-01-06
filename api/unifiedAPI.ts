@@ -1,3 +1,4 @@
+import communityApi from "./communityApi";
 import getUserApi from "./getUser";
 
 /**
@@ -5,6 +6,7 @@ import getUserApi from "./getUser";
  */
 const unifiedAPI = {
   getUserApi,
+  communityApi,
 };
 
 export default unifiedAPI;

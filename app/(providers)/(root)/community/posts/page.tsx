@@ -1,9 +1,7 @@
-import React from 'react'
+import ViewCommunityPosts from "./_components/ViewCommunityPosts";
 
-function CommunityPostsPage() {
-  return (
-    <div></div>
-  )
+async function CommunityPostsPage() {
+  return <ViewCommunityPosts />;
 }
 
-export default CommunityPostsPage
+export default CommunityPostsPage;

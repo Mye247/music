@@ -18,7 +18,7 @@ export default function HomePage() {
     if (isLoggedIn === false) {
       toast.info("로그인/회원가입 후 이용하실 수 있는 서비스 입니다.");
     } else if (isLoggedIn === true) {
-      router.push("/community/post/");
+      router.push("/community/post/new");
     }
   };
   return (
@@ -28,7 +28,7 @@ export default function HomePage() {
       <main className="w-full h-full grid grid-cols-2">
         <article className="w-[60%] h-[300px] ">
           {/* 전체 글 보는 페이지 링크 */}
-          <Link href={"/"}>
+          <Link href={"/community/posts"}>
             <p className="font-bold text-xl">최신 글</p>
           </Link>
 

@@ -11,25 +11,31 @@ export type Database = {
     Tables: {
       comment: {
         Row: {
+          commentId: string
           content: string
           createdAt: string
           id: number
           postId: number
           userId: string | null
+          userName: string
         }
         Insert: {
+          commentId: string
           content: string
           createdAt?: string
           id?: number
           postId: number
           userId?: string | null
+          userName: string
         }
         Update: {
+          commentId?: string
           content?: string
           createdAt?: string
           id?: number
           postId?: number
           userId?: string | null
+          userName?: string
         }
         Relationships: [
           {
@@ -37,7 +43,7 @@ export type Database = {
             columns: ["postId"]
             isOneToOne: false
             referencedRelation: "community"
-            referencedColumns: ["id"]
+            referencedColumns: ["postId"]
           },
         ]
       }
@@ -47,27 +53,30 @@ export type Database = {
           content: string
           createdAt: string
           good: number
-          id: number
+          postId: number
           title: string
           userId: string | null
+          userName: string
         }
         Insert: {
           bed?: number | null
           content: string
           createdAt?: string
           good?: number
-          id?: number
+          postId?: number
           title: string
           userId?: string | null
+          userName: string
         }
         Update: {
           bed?: number | null
           content?: string
           createdAt?: string
           good?: number
-          id?: number
+          postId?: number
           title?: string
           userId?: string | null
+          userName?: string
         }
         Relationships: []
       }
