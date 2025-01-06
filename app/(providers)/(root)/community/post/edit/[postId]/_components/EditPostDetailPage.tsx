@@ -49,7 +49,7 @@ function EditPostDetailPage({ postId }: EditPostDetailPageProps) {
       await unifiedAPI.communityApi.updateCommunityPost(postId, title, content);
 
       toast.success("수정에 성공하셨습니다.");
-      router.push("/community/posts");
+      router.push(`/community/post/${postId}`);
     }
   };
 

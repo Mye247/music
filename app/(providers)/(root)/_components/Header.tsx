@@ -53,8 +53,8 @@ function Header() {
         </div>
       ) : (
         <div className="flex gap-x-3 pr-5">
-          <Link href={"/sign-up"}>회원가입</Link>
           <button onClick={handleClickOpenLogInModal}>로그인</button>
+          <Link href={"/sign-up"}>회원가입</Link>
         </div>
       )}
     </header>

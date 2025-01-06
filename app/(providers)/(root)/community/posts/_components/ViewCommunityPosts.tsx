@@ -78,9 +78,24 @@ function ViewCommunityPosts() {
       <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px]">
         <div className="flex gap-3 justify-end mb-4">
           {/* 정렬 옵션 */}
-          <p onClick={() => handleClickSelectButton(true, "createdAt")}>OLD</p>
-          <p onClick={() => handleClickSelectButton(false, "createdAt")}>NEW</p>
-          <p onClick={() => handleClickSelectButton(false, "good")}>TOP</p>
+          <p
+            onClick={() => handleClickSelectButton(true, "createdAt")}
+            className="cursor-pointer"
+          >
+            OLD
+          </p>
+          <p
+            onClick={() => handleClickSelectButton(false, "createdAt")}
+            className="cursor-pointer"
+          >
+            NEW
+          </p>
+          <p
+            onClick={() => handleClickSelectButton(false, "good")}
+            className="cursor-pointer"
+          >
+            TOP
+          </p>
         </div>
 
         {/* 스크롤이 가능한 리스트 */}

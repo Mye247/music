@@ -1,12 +1,13 @@
 "use client";
 
+import unifiedAPI from "@/api/unifiedAPI";
 import { supabase } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
 import { useModalStore } from "@/zustand/modalStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ComponentProps, useState } from "react";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function LogInModal() {
   // 홈으로 이동
@@ -25,20 +26,20 @@ function LogInModal() {
     closeModal();
   };
 
-  const toastComment = <div>로그인에 성공하셨습니다.</div>;
+  // const toastComment = <div>로그인에 성공하셨습니다.</div>;
 
-  const notify = () =>
-    toast.info(toastComment, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+  // const notify = () =>
+  //   toast.info(toastComment, {
+  //     position: "top-right",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: "light",
+  //     transition: Bounce,
+  //   });
 
   // 로그인 버튼
   const handleSubmitSignUpButton: ComponentProps<"form">["onSubmit"] = async (
@@ -55,7 +56,12 @@ function LogInModal() {
 
     if (!result.data.user) return toast.error("회원 정보가 없습니다");
 
-    notify();
+    // 프로필 테이블 정보
+    const myProfile = await unifiedAPI.getUserApi.getMyProfile();
+
+    const userName = myProfile?.[0].userName;
+
+    toast.success(`${userName}님 로그인에 성공하셨습니다.`);
 
     logIn();
 
