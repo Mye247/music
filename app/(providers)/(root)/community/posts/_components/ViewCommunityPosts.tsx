@@ -51,13 +51,15 @@ function ViewCommunityPosts() {
 
   return (
     <Page title="Posts">
-      <div className="bg-gray-900 text-gray-200 p-6 rounded-lg">
+      <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24">
         <div className="flex gap-3 justify-end mb-4">
+          {/* 정렬 옵션 */}
           <p onClick={() => handleClickSelectButton(true, "createdAt")}>OLD</p>
           <p onClick={() => handleClickSelectButton(false, "createdAt")}>NEW</p>
           <p onClick={() => handleClickSelectButton(false, "good")}>TOP</p>
         </div>
         <ul className="space-y-4">
+          {/* 리스트 출력 */}
           {getPosts?.map((posts) => (
             <li
               key={posts.postId}

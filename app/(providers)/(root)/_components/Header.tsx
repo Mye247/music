@@ -41,7 +41,7 @@ function Header() {
   }, [isLoggedIn]);
 
   return (
-    <header className="min-w-full bg-cyan-700 min-h-[80px] flex items-center justify-between">
+    <header className="min-w-full bg-cyan-700 min-h-[65px] flex items-center justify-between">
       <Link href={"/"}>
         <h1 className="pl-5 font-bold text-xl">music 서비스 (커뮤니티)</h1>
       </Link>
