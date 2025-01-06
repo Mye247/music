@@ -10,25 +10,38 @@ function ViewCommunityPosts() {
   const queryClient = useQueryClient();
 
   const [typeBoolean, setTypeBoolean] = useState(false);
+  const [typeColumn, setTypeColumn] = useState("createdAt");
 
   const { data: getPosts } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
       const getPosts = await unifiedAPI.communityApi.getCommunityPosts(
-        typeBoolean
+        typeBoolean,
+        typeColumn
       );
 
       return getPosts;
     },
   });
 
-  const handleClickSelectButton = (typeBoolean: boolean) => {
-    mutate(typeBoolean);
+  // 정렬방식 정하기 버튼
+  const handleClickSelectButton = (
+    typeBoolean: boolean,
+    columnString: string
+  ) => {
+    mutate({ typeBoolean, columnString });
   };
 
   const { mutate } = useMutation({
-    mutationFn: async (typeBoolean: boolean) => {
+    mutationFn: async ({
+      typeBoolean,
+      columnString,
+    }: {
+      typeBoolean: boolean;
+      columnString: string;
+    }) => {
       setTypeBoolean(typeBoolean);
+      setTypeColumn(columnString);
     },
 
     onSuccess: () => {
@@ -40,8 +53,9 @@ function ViewCommunityPosts() {
     <Page title="Posts">
       <div className="bg-gray-900 text-gray-200 p-6 rounded-lg">
         <div className="flex gap-3 justify-end mb-4">
-          <p onClick={() => handleClickSelectButton(true)}>OLD</p>
-          <p onClick={() => handleClickSelectButton(false)}>NEW</p>
+          <p onClick={() => handleClickSelectButton(true, "createdAt")}>OLD</p>
+          <p onClick={() => handleClickSelectButton(false, "createdAt")}>NEW</p>
+          <p onClick={() => handleClickSelectButton(false, "good")}>TOP</p>
         </div>
         <ul className="space-y-4">
           {getPosts?.map((posts) => (

@@ -2,13 +2,16 @@ import { supabase } from "@/supabase/client";
 
 /**
  * 커뮤니티 글 전부 가져오기
+ *
+ * createdAt = 시간순, good = 인기순,
+ *
  * false = 최신순, true = 예전순
  */
-const getCommunityPosts = async (typeBoolean: boolean) => {
+const getCommunityPosts = async (typeBoolean: boolean, typeColumn: string) => {
   const response = await supabase
     .from("community")
     .select("*")
-    .order("createdAt", { ascending: typeBoolean });
+    .order(typeColumn, { ascending: typeBoolean });
   const data = response.data;
 
   return data;
@@ -209,9 +212,9 @@ const toggleVote = async (postId: string, vote: number) => {
 const communityApi = {
   getCommunityPosts,
   getCommunityPost,
+  createCommunityPost,
   deleteCommunityPost,
   updateCommunityPost,
-  createCommunityPost,
 
   createPostComment,
   getPostComments,
