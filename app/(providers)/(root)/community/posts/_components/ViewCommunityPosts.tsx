@@ -24,7 +24,7 @@ function ViewCommunityPosts() {
     },
   });
 
-  const { data: getPosts } = useQuery({
+  const { data: posts } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
       const getPosts = await unifiedAPI.communityApi.getCommunityPosts(
@@ -41,10 +41,10 @@ function ViewCommunityPosts() {
     typeBoolean: boolean,
     columnString: string
   ) => {
-    mutate({ typeBoolean, columnString });
+    selectPost({ typeBoolean, columnString });
   };
 
-  const { mutate } = useMutation({
+  const { mutate: selectPost } = useMutation({
     mutationFn: async ({
       typeBoolean,
       columnString,
@@ -61,6 +61,18 @@ function ViewCommunityPosts() {
     },
   });
 
+  // 내가 작성한 글 삭제하기
+  const { mutate: deletePost } = useMutation({
+    mutationFn: async (postId: string) => {
+      await unifiedAPI.communityApi.deleteCommunityPost(postId);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+  });
+
+  const handleClickDeletePostButton = (postId: string) => {
+    deletePost(postId);
+  };
+
   return (
     <Page title="Posts">
       <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px]">
@@ -74,30 +86,39 @@ function ViewCommunityPosts() {
         {/* 스크롤이 가능한 리스트 */}
         <ul className="space-y-4 max-h-[450px] overflow-y-auto">
           {/* 리스트 출력 */}
-          {getPosts?.map((posts) => (
+          {posts?.map((post) => (
             <li
-              key={posts.postId}
+              key={post.postId}
               className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-between"
             >
-              <Link href={`/community/post/${posts?.postId}`}>
-                <p className="text-xl font-semibold text-white">
-                  {posts.title}
-                </p>
-                <p className="text-base text-gray-400">{posts.content}</p>
+              <Link href={`/community/post/${post?.postId}`}>
+                <p className="text-xl font-semibold text-white">{post.title}</p>
+                <p className="text-base text-gray-400">{post.content}</p>
               </Link>
 
               <div className="text-center">
-                <p className="mb-3">글 작성자: {posts.userName}</p>
+                <p className="mb-3">글 작성자: {post.userName}</p>
                 {/* 작성한 사람만 수정가능, 버튼 클릭시 수정 페이지로 이동 */}
-                {userId === posts.userId ? (
-                  <button
-                    className="bg-blue-950 w-[100px] h-[30px] rounded-lg"
-                    onClick={() =>
-                      router.push(`/community/post/edit/${posts.postId}`)
-                    }
-                  >
-                    수정
-                  </button>
+                {userId === post.userId ? (
+                  <div className="flex gap-3">
+                    <button
+                      className="bg-blue-950 w-[100px] h-[30px] rounded-lg"
+                      onClick={() =>
+                        router.push(`/community/post/edit/${post.postId}`)
+                      }
+                    >
+                      수정
+                    </button>
+
+                    <button
+                      className="bg-blue-950 w-[70px] h-[30px] rounded-lg"
+                      onClick={() =>
+                        handleClickDeletePostButton(String(post.postId))
+                      }
+                    >
+                      삭제
+                    </button>
+                  </div>
                 ) : null}
               </div>
             </li>

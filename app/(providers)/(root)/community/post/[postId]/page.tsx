@@ -1,5 +1,5 @@
 import Page from "../../../_components/Page";
-import PostDetailPage from "./_components/PostDetailPage";
+import ViewPostDetailPage from "./_components/ViewPostDetailPage";
 
 interface ViewPostPageProps {
   params: Promise<{ postId: string }>;
@@ -11,7 +11,7 @@ async function ViewPostPage(props: ViewPostPageProps) {
   return (
     <Page title="Post">
       {/* post 상세페이지 */}
-      <PostDetailPage postId={postId} />
+      <ViewPostDetailPage postId={postId} />
     </Page>
   );
 }

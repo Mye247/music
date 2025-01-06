@@ -1,49 +1,69 @@
 "use client";
 
 import unifiedAPI from "@/api/unifiedAPI";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Page from "../../../_components/Page";
 
-const AddNewPostPage = () => {
+interface EditPostDetailPageProps {
+  postId: string;
+}
+
+interface communityPost {
+  bed: number | null;
+  content: string;
+  createdAt: string;
+  good: number;
+  postId: number;
+  title: string;
+  userId: string | null;
+  userName: string;
+}
+
+function EditPostDetailPage({ postId }: EditPostDetailPageProps) {
   const router = useRouter();
+
+  const [post, setPost] = useState<communityPost | null>(null);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // post 등록 버튼
-  const handleClickAddPostButton = async () => {
-    if (!title) {
-      toast.error("제목을 작성해주세요.");
-      return;
-    } else if (!content) {
-      toast.error("본문을 작성해주세요.");
-      return;
+  // 수정할 페이지 정보 가져오기
+  useQuery({
+    queryKey: ["post", { postId: postId }],
+    queryFn: async () => {
+      const communityPost = await unifiedAPI.communityApi.getCommunityPost(
+        postId
+      );
+      setPost(communityPost?.[0] ?? null);
+
+      return communityPost;
+    },
+  });
+
+  const handleClickEditPostButton = async () => {
+    if (!title || !content) {
+      toast.error("제목 / 본문을 입력해주세요.");
     } else {
-      // 글 추가하기
-      const getUser = await unifiedAPI.getUserApi.getUser();
-      if (!getUser) return;
-      const userId = getUser.id;
-      const userName = getUser.user_metadata.display_name as string;
+      await unifiedAPI.communityApi.updateCommunityPost(postId, title, content);
 
-      const data = {
-        userId,
-        userName,
-        title,
-        content,
-      };
-
-      await unifiedAPI.communityApi.createCommunityPost(data);
+      toast.success("수정에 성공하셨습니다.");
       router.push("/community/posts");
     }
   };
 
+  useEffect(() => {
+    if (!post) return;
+    setTitle(post?.title);
+    setContent(post.content);
+  }, [post]);
+  console.log();
   return (
-    <Page title="new post">
+    <main>
       <div className="max-w-[1000px] h-[600px]  p-6 bg-gray-900 text-gray-100 shadow-lg rounded">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-50">
-          글 작성하기
+          글 수정하기
         </h2>
         <form onSubmit={(e) => e.preventDefault()}>
           {/* 제목 */}
@@ -77,22 +97,22 @@ const AddNewPostPage = () => {
             <button
               type="button"
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
-              onClick={handleClickAddPostButton}
+              onClick={handleClickEditPostButton}
             >
-              작성하기
+              수정하기
             </button>
             <button
               type="button"
               className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 focus:outline-none"
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/community/posts")}
             >
-              취소하기
+              수정 취소하기
             </button>
           </div>
         </form>
       </div>
-    </Page>
+    </main>
   );
-};
+}
 
-export default AddNewPostPage;
+export default EditPostDetailPage;

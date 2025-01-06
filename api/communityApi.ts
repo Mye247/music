@@ -34,14 +34,14 @@ const getCommunityPost = async (postId: string) => {
 
 /**
  * 내가 작성한 글 삭제하기
- * @param userId 내 아이디
+ * @param postId 글 아이디
  * @returns
  */
-const deleteCommunityPost = async (userId: string) => {
+const deleteCommunityPost = async (postId: string) => {
   const response = await supabase
     .from("community")
     .delete()
-    .eq("userId", userId);
+    .eq("postId", postId);
 
   const data = response.data;
 
@@ -54,11 +54,15 @@ const deleteCommunityPost = async (userId: string) => {
  * @param content 수정할 내용
  * @returns
  */
-const updateCommunityPost = async (id: string, content: string) => {
+const updateCommunityPost = async (
+  postId: string,
+  title: string,
+  content: string
+) => {
   const response = await supabase
     .from("community")
-    .update({ content })
-    .eq("id", id);
+    .update({ title, content })
+    .eq("postId", postId);
 
   if (response.error) {
     console.error("에러", response.error.message);

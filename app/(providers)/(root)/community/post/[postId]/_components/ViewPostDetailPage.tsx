@@ -19,7 +19,7 @@ interface PostDetailPageProps {
   postId: string;
 }
 
-function PostDetailPage(props: PostDetailPageProps) {
+function ViewPostDetailPage(props: PostDetailPageProps) {
   const postId = props.postId;
   const queryClient = useQueryClient();
 
@@ -129,9 +129,9 @@ function PostDetailPage(props: PostDetailPageProps) {
       </div>
 
       {/* 댓글 영역 */}
-      <CommentList postId={postId}/>
+      <CommentList postId={postId} />
     </main>
   );
 }
 
-export default PostDetailPage;
+export default ViewPostDetailPage;
