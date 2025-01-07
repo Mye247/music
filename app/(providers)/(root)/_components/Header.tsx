@@ -48,7 +48,12 @@ function Header() {
 
       {isLoggedIn ? (
         <div className="flex gap-x-3 pr-5">
-          <p>{loginUser?.user_metadata.display_name}</p>
+          <Link
+            href={`/user/${loginUser?.id}/profile`}
+            className="cursor-pointer"
+          >
+            <p>{loginUser?.user_metadata.display_name}</p>
+          </Link>
           <button onClick={handleClickLogOutButton}>로그아웃</button>
         </div>
       ) : (

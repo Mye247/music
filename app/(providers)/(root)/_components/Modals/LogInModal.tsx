@@ -57,7 +57,7 @@ function LogInModal() {
     if (!result.data.user) return toast.error("회원 정보가 없습니다");
 
     // 프로필 테이블 정보
-    const myProfile = await unifiedAPI.getUserApi.getMyProfile();
+    const myProfile = await unifiedAPI.getUserApi.getLoggedInUserData();
 
     const userName = myProfile?.[0].userName;
 

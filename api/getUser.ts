@@ -11,10 +11,10 @@ const getUser = async () => {
 };
 
 /**
- * 현재 로그인한 사용자의 프로필 정보
+ * 현재 로그인한 사용자의 테이블 정보
  * @returns
  */
-const getMyProfile = async () => {
+const getLoggedInUserData = async () => {
   const user = await getUser();
 
   if (!user) return;
@@ -33,7 +33,7 @@ const getMyProfile = async () => {
 
 const getUserApi = {
   getUser,
-  getMyProfile,
+  getLoggedInUserData,
 };
 
 export default getUserApi;

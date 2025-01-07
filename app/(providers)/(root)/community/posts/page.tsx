@@ -1,6 +1,6 @@
 import ViewCommunityPosts from "./_components/ViewCommunityPosts";
 
-async function CommunityPostsPage() {
+function CommunityPostsPage() {
   return <ViewCommunityPosts />;
 }
 

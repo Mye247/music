@@ -31,7 +31,7 @@ function CommentList(props: CommentListProps) {
   const { data: myProfile } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const response = await unifiedAPI.getUserApi.getMyProfile();
+      const response = await unifiedAPI.getUserApi.getLoggedInUserData();
 
       return response?.[0];
     },
