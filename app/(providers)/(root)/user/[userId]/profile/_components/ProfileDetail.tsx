@@ -70,7 +70,9 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     <div className="bg-gray-900 min-h-screen text-gray-200">
       {/* 헤더 */}
       <header className="bg-gray-800 py-4 px-6 shadow-md">
-        <h1 className="text-2xl font-semibold">User Profile</h1>
+        <h2 className="text-2xl font-semibold">
+          {userProfile.userName}님의 프로필
+        </h2>
       </header>
 
       {/* 메인 컨테이너 */}
@@ -89,7 +91,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
                 </div>
                 <div>
                   <h2 className="text-xl font-semibold">
-                    {userProfile?.userName}님
+                    {userProfile?.userName} 님
                   </h2>
                   <p className="text-gray-400">@{userProfile?.userName}</p>
                 </div>
