@@ -3,7 +3,7 @@
 import { Database } from "@/database.types";
 import { supabase } from "@/supabase/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Page from "../../_components/Page";
 
@@ -17,7 +17,7 @@ function SignUpPage() {
   const [checkUserPassword, setCheckUserPassword] = useState("");
 
   // 회원가입 로직
-  const handleClickSignUpButton = async (e: any) => {
+  const handleClickSignUpButton = async (e: React.FormEvent) => {
     e.preventDefault();
     // 에러 메세지
     let errorMessage = "";
