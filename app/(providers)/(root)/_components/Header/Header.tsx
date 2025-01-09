@@ -7,7 +7,8 @@ import { useModalStore } from "@/zustand/modalStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import LogInModal from "./Modals/LogInModal";
+import LogInModal from "../Modals/LogInModal";
+import SearchBar from "./SearchBar";
 
 interface loggedInUser {
   adminType: boolean;
@@ -55,6 +56,9 @@ function Header() {
       <Link href={"/"}>
         <h1 className="pl-5 font-bold text-xl">music 서비스 (커뮤니티)</h1>
       </Link>
+
+      {/* 검색바 */}
+      <SearchBar />
 
       {isLoggedIn ? (
         <div className="flex gap-x-3 pr-5">
