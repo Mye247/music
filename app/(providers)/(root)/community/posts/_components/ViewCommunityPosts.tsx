@@ -127,15 +127,13 @@ function ViewCommunityPosts() {
                   <p className="text-xl font-semibold text-white">
                     {post.title}
                   </p>
-                  <p className="text-base text-gray-400">{post.content}</p>
+                  <p className="text-base text-gray-400 w-full">
+                    {post.content}
+                  </p>
                 </div>
               </Link>
               {/* 조회수 스타일 적용 및 오른쪽 정렬 */}
-              <div className="flex items-center justify-between w-full">
-                <span className=" font-sans text-ls ml-auto">
-                  조회수 {post.viewCounter}
-                </span>
-              </div>
+
               <div className="text-center ml-5">
                 <p className="mb-3">글 작성자: {post.userName}</p>
                 {/* 작성한 사람만 수정가능, 버튼 클릭시 수정 페이지로 이동 */}
@@ -160,6 +158,11 @@ function ViewCommunityPosts() {
                     </button>
                   </div>
                 ) : null}
+                <div className="flex items-center justify-between w-full mt-3">
+                  <span className=" font-sans text-ls ml-auto">
+                    조회수 {post.viewCounter}
+                  </span>
+                </div>
               </div>
             </li>
           ))}
