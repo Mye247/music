@@ -57,6 +57,7 @@ export type Database = {
           title: string
           userId: string | null
           userName: string
+          viewCounter: number
         }
         Insert: {
           bed?: number | null
@@ -67,6 +68,7 @@ export type Database = {
           title: string
           userId?: string | null
           userName: string
+          viewCounter?: number
         }
         Update: {
           bed?: number | null
@@ -77,6 +79,7 @@ export type Database = {
           title?: string
           userId?: string | null
           userName?: string
+          viewCounter?: number
         }
         Relationships: []
       }
@@ -89,7 +92,7 @@ export type Database = {
           userId: string
           userIntroduction: string
           userName: string
-          userProfileImage: string | null
+          userProfileImage: string
         }
         Insert: {
           adminType?: boolean
@@ -99,7 +102,7 @@ export type Database = {
           userId: string
           userIntroduction?: string
           userName: string
-          userProfileImage?: string | null
+          userProfileImage?: string
         }
         Update: {
           adminType?: boolean
@@ -109,7 +112,7 @@ export type Database = {
           userId?: string
           userIntroduction?: string
           userName?: string
-          userProfileImage?: string | null
+          userProfileImage?: string
         }
         Relationships: []
       }

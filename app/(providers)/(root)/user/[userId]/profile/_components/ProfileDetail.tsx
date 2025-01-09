@@ -3,7 +3,7 @@
 import unifiedAPI from "@/api/unifiedAPI";
 import { configs } from "@/config/config";
 import { useModalStore } from "@/zustand/modalStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import ProfileEditModal from "./ProfileEditModal";
@@ -47,6 +47,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
       const response = await unifiedAPI.profileApi.getUserProfile(userId);
       return response;
     },
+    staleTime: 1000 * 60 * 5,
   });
 
   const { data } = useQuery({
@@ -56,10 +57,11 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
         userId,
         typeBoolean
       );
-
       setUserPosts(response);
       return response;
     },
+    staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
   });
 
   // post 정렬 버튼

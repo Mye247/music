@@ -213,12 +213,36 @@ const toggleVote = async (postId: string, vote: number) => {
   }
 };
 
+/**
+ * post글 클릭시 조회수 1 올리기
+ * @param postId
+ * @returns
+ */
+const updateCommunityViewCounter = async (postId: string) => {
+  const response = await supabase
+    .from("community")
+    .select("*")
+    .eq("postId", postId)
+    .single();
+
+  const viewCounter = response.data?.viewCounter;
+
+  const result = await supabase
+    .from("community")
+    .update({ viewCounter: viewCounter! + 1 })
+    .eq("postId", postId);
+
+  return result.data;
+};
+
 const communityApi = {
   getCommunityPosts,
   getCommunityPost,
   createCommunityPost,
   deleteCommunityPost,
   updateCommunityPost,
+
+  updateCommunityViewCounter,
 
   createPostComment,
   getPostComments,

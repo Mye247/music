@@ -3,7 +3,8 @@
 import unifiedAPI from "@/api/unifiedAPI";
 import { useModalStore } from "@/zustand/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ComponentProps, useState } from "react";
+import React, { ComponentProps, useState } from "react";
+import { toast } from "react-toastify";
 
 interface ProfileEditModalProps {
   userProfile: userProfileType;
@@ -16,7 +17,7 @@ interface userProfileType {
   userId: string;
   userIntroduction: string;
   userName: string;
-  userProfileImage: string | null;
+  userProfileImage: string;
 }
 
 function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
@@ -44,17 +45,23 @@ function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
 
   // 수정 버튼
   const { mutate } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (e: React.FormEvent<HTMLButtonElement>) => {
+      e.preventDefault();
       if (!userProfile) return;
       const result = await unifiedAPI.profileApi.editUserProfile(
         image,
         userProfile.userId,
-        String(userProfile.userProfileImage),
+        userProfile.userProfileImage,
         userName,
         userIntroduction
       );
 
-      return result;
+      if (result) {
+        toast.success("프로필 수정에 성공하셨습니다.");
+        closeModal();
+      } else {
+        return result;
+      }
     },
 
     onSuccess: () => {
@@ -67,23 +74,31 @@ function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
     },
   });
 
-  const handleClickEditProfileButton = () => {
-    mutate();
+  const handleClickEditProfileButton = (
+    e: React.FormEvent<HTMLButtonElement>
+  ) => {
+    mutate(e);
   };
 
-  // 이미지 정보 가져오기
+  // 이미지 가져오기
   const handleChangeFileInput: ComponentProps<"input">["onChange"] = (e) => {
     const files = e.target.files;
 
     if (!files || files.length === 0) {
-      return setImage(null); // 파일이 없을 때 처리
+      setImage(null);
+      return;
     }
 
     const file = files[0];
-
     const previewProfile = URL.createObjectURL(file);
+
     setImage(file);
     setPreviewProfile(previewProfile);
+
+    // 이전 URL 정리
+    return () => {
+      URL.revokeObjectURL(previewProfile);
+    };
   };
 
   return (
@@ -138,7 +153,7 @@ function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
           </div>
 
           <button
-            onClick={handleClickEditProfileButton}
+            onClick={(e) => handleClickEditProfileButton(e)}
             className="border border-white bg-blue-700 text-white w-full h-[60px] mt-10 hover:scale-105 transition-all rounded-lg shadow-md"
           >
             수정하기

@@ -13,6 +13,7 @@ interface CommunityPost {
   title: string;
   userId: string | null;
   userName: string;
+  viewCounter: number;
 }
 
 interface PostDetailPageProps {
@@ -101,7 +102,7 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
             <span>{new Date(post.createdAt).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-4">
-            <span>조회 {0}</span>
+            <span>조회 {post.viewCounter}</span>
             <span>추천 {post.good}</span>
           </div>
         </div>

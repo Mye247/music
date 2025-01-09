@@ -73,6 +73,18 @@ function ViewCommunityPosts() {
     deletePost(postId);
   };
 
+  // 조회수 올리기
+  const { mutate: updateViewCounter } = useMutation({
+    mutationFn: async (postId: string) => {
+      await unifiedAPI.communityApi.updateCommunityViewCounter(postId);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+  });
+
+  const handleClickUpdateViewCounterButton = (postId: string) => {
+    updateViewCounter(postId);
+  };
+
   return (
     <Page title="Posts">
       <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px]">
@@ -107,10 +119,18 @@ function ViewCommunityPosts() {
               className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-between"
             >
               <Link href={`/community/post/${post?.postId}`}>
-                <p className="text-xl font-semibold text-white">{post.title}</p>
-                <p className="text-base text-gray-400">{post.content}</p>
+                <div
+                  onClick={() =>
+                    handleClickUpdateViewCounterButton(String(post.postId))
+                  }
+                >
+                  <p className="text-xl font-semibold text-white">
+                    {post.title}
+                  </p>
+                  <p className="text-base text-gray-400">{post.content}</p>
+                </div>
               </Link>
-
+              <span>조회수 {post.viewCounter}</span>
               <div className="text-center">
                 <p className="mb-3">글 작성자: {post.userName}</p>
                 {/* 작성한 사람만 수정가능, 버튼 클릭시 수정 페이지로 이동 */}

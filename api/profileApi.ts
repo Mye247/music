@@ -69,6 +69,8 @@ const editUserProfile = async (
     supabase.from("comment").update({ userName }).eq("userId", userId),
     supabase.from("community").update({ userName }).eq("userId", userId),
   ]);
+
+  return true;
 };
 
 const profileApi = {
