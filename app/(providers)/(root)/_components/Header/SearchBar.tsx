@@ -20,6 +20,7 @@ function SearchBar() {
       return [];
     } else if (searchText) {
       router.push(`/search/${searchText}`);
+      setSearchText("");
     }
   };
 
