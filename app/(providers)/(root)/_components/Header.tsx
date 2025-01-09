@@ -59,7 +59,7 @@ function Header() {
       {isLoggedIn ? (
         <div className="flex gap-x-3 pr-5">
           <Link
-            href={`/user/${loggedInUser?.id}/profile`}
+            href={`/user/${loggedInUser?.userId}/profile`}
             className="cursor-pointer"
           >
             <p>{loggedInUser?.userName}</p>

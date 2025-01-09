@@ -64,22 +64,11 @@ const editUserProfile = async (
   };
 
   // 유저 테이블 업데이트
-  const response = await supabase
-    .from("users")
-    .update(data)
-    .eq("userId", userId);
-
-  const response1 = await supabase
-    .from("community")
-    .update({ userName })
-    .eq("userId", userId);
-
-  const response2 = await supabase
-    .from("comment")
-    .update({ userName })
-    .eq("userId", userId);
-
-  return response.data;
+  const [response1, response2, response3] = await Promise.all([
+    supabase.from("users").update(data).eq("userId", userId),
+    supabase.from("comment").update({ userName }).eq("userId", userId),
+    supabase.from("community").update({ userName }).eq("userId", userId),
+  ]);
 };
 
 const profileApi = {
