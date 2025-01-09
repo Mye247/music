@@ -2,9 +2,11 @@
 
 import unifiedAPI from "@/api/unifiedAPI";
 import { configs } from "@/config/config";
+import { useModalStore } from "@/zustand/modalStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
+import ProfileEditModal from "./ProfileEditModal";
 
 interface ProfileDetailProps {
   userId: string;
@@ -24,9 +26,20 @@ interface userPosts {
 function ProfileDetail({ userId }: ProfileDetailProps) {
   const queryClient = useQueryClient();
 
+  const openModal = useModalStore((state) => state.openModal);
+
   const [userPosts, setUserPosts] = useState<userPosts[] | null>(null);
 
   const [typeBoolean, setTypeBoolean] = useState(false);
+
+  const { data: loginUser } = useQuery({
+    queryKey: ["loginUser"],
+    queryFn: async () => {
+      const result = await unifiedAPI.getUserApi.getUser();
+
+      return result;
+    },
+  });
 
   const { data: userProfile } = useQuery({
     queryKey: ["userProfile", { userId: userId }],
@@ -66,6 +79,17 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     },
   });
 
+  // 수정 모달 열기
+  const handleClickOpenEditModal = () => {
+    if (!userProfile) return;
+    else {
+      openModal({
+        element: <ProfileEditModal userProfile={userProfile} />,
+        backdrop: true,
+      });
+    }
+  };
+
   return userProfile ? (
     <div className="bg-gray-900 min-h-screen text-gray-200">
       {/* 헤더 */}
@@ -98,6 +122,9 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
               </div>
               <div className="mt-6 space-y-4">
                 <p>
+                  <span>소개: {userProfile.userIntroduction}</span>
+                </p>
+                <p>
                   <span className="font-semibold text-gray-300">가입일: </span>
                   {new Date(userProfile!.createdAt).toLocaleString()}
                 </p>
@@ -112,9 +139,15 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
                 </p>
               </div>
             </div>
-            <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-              프로필 수정
-            </button>
+            {/* 로그인한 유저와 프로필 유저 아이디가 같다면 표시 */}
+            {loginUser?.id === userProfile.userId ? (
+              <button
+                className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
+                onClick={handleClickOpenEditModal}
+              >
+                프로필 수정
+              </button>
+            ) : null}
           </div>
 
           {/* 활동 탭 */}

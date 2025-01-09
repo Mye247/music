@@ -1,4 +1,6 @@
+import { Database } from "@/database.types";
 import { supabase } from "@/supabase/client";
+import { nanoid } from "nanoid";
 
 /**
  * 유저 프로필 페이지 정보 가져오기
@@ -33,9 +35,57 @@ const getUserPosts = async (userId: string, typeBoolean: boolean) => {
   return data;
 };
 
+/**
+ * 프로필 정보 수정하기
+ * @param userName
+ * @param introduction
+ */
+const editUserProfile = async (
+  image: File | null,
+  userId: string,
+  userProfileImage: string,
+  userName: string,
+  userIntroduction: string
+) => {
+  let imageUrl = userProfileImage;
+
+  if (image) {
+    const uploadImage = await supabase.storage
+      .from("userProfiles")
+      .upload(nanoid(), image, { upsert: true });
+
+    imageUrl = String(uploadImage.data?.fullPath);
+  }
+
+  const data: Database["public"]["Tables"]["users"]["Update"] = {
+    userName,
+    userIntroduction,
+    userProfileImage: imageUrl,
+  };
+
+  // 유저 테이블 업데이트
+  const response = await supabase
+    .from("users")
+    .update(data)
+    .eq("userId", userId);
+
+  const response1 = await supabase
+    .from("community")
+    .update({ userName })
+    .eq("userId", userId);
+
+  const response2 = await supabase
+    .from("comment")
+    .update({ userName })
+    .eq("userId", userId);
+
+  return response.data;
+};
+
 const profileApi = {
   getUserProfile,
   getUserPosts,
+  editUserProfile,
 };
 
 export default profileApi;

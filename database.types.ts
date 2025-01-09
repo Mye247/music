@@ -82,6 +82,7 @@ export type Database = {
       }
       users: {
         Row: {
+          adminType: boolean
           createdAt: string
           id: number
           userEmail: string
@@ -91,6 +92,7 @@ export type Database = {
           userProfileImage: string | null
         }
         Insert: {
+          adminType?: boolean
           createdAt?: string
           id?: number
           userEmail: string
@@ -100,6 +102,7 @@ export type Database = {
           userProfileImage?: string | null
         }
         Update: {
+          adminType?: boolean
           createdAt?: string
           id?: number
           userEmail?: string

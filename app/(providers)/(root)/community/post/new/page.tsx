@@ -22,10 +22,10 @@ const AddNewPostPage = () => {
       return;
     } else {
       // 글 추가하기
-      const getUser = await unifiedAPI.getUserApi.getUser();
+      const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
       if (!getUser) return;
-      const userId = getUser.id;
-      const userName = getUser.user_metadata.display_name as string;
+      const userId = getUser.userId;
+      const userName = getUser.userName;
 
       const data = {
         userId,

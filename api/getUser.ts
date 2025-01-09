@@ -24,7 +24,8 @@ const getLoggedInUserData = async () => {
   const response = await supabase
     .from("users")
     .select("*")
-    .eq("userId", userId);
+    .eq("userId", userId)
+    .single();
 
   const data = response.data;
 

@@ -33,7 +33,7 @@ function CommentList(props: CommentListProps) {
     queryFn: async () => {
       const response = await unifiedAPI.getUserApi.getLoggedInUserData();
 
-      return response?.[0];
+      return response;
     },
   });
 

@@ -4,18 +4,28 @@ import unifiedAPI from "@/api/unifiedAPI";
 import { supabase } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
 import { useModalStore } from "@/zustand/modalStore";
-import { User } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LogInModal from "./Modals/LogInModal";
+
+interface loggedInUser {
+  adminType: boolean;
+  createdAt: string;
+  id: number;
+  userEmail: string;
+  userId: string;
+  userIntroduction: string;
+  userName: string;
+  userProfileImage: string | null;
+}
 
 function Header() {
   // state
   const openModal = useModalStore((state) => state.openModal);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logOut = useAuthStore((state) => state.logOut);
-  const [loginUser, setLoginUser] = useState<User | null>();
+  const [loggedInUser, setLoggedInUser] = useState<loggedInUser | null>();
 
   // 핸들러
 
@@ -34,8 +44,8 @@ function Header() {
   // 유저 정보 갱신
   useEffect(() => {
     const loginUserData = async () => {
-      const getUser = await unifiedAPI.getUserApi.getUser();
-      setLoginUser(getUser);
+      const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
+      setLoggedInUser(getUser);
     };
     loginUserData();
   }, [isLoggedIn]);
@@ -49,10 +59,10 @@ function Header() {
       {isLoggedIn ? (
         <div className="flex gap-x-3 pr-5">
           <Link
-            href={`/user/${loginUser?.id}/profile`}
+            href={`/user/${loggedInUser?.id}/profile`}
             className="cursor-pointer"
           >
-            <p>{loginUser?.user_metadata.display_name}</p>
+            <p>{loggedInUser?.userName}</p>
           </Link>
           <button onClick={handleClickLogOutButton}>로그아웃</button>
         </div>
