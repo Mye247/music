@@ -88,6 +88,7 @@ export type Database = {
           adminType: boolean
           createdAt: string
           id: number
+          userActivityPoints: number
           userEmail: string
           userId: string
           userIntroduction: string
@@ -98,6 +99,7 @@ export type Database = {
           adminType?: boolean
           createdAt?: string
           id?: number
+          userActivityPoints?: number
           userEmail: string
           userId: string
           userIntroduction?: string
@@ -108,6 +110,7 @@ export type Database = {
           adminType?: boolean
           createdAt?: string
           id?: number
+          userActivityPoints?: number
           userEmail?: string
           userId?: string
           userIntroduction?: string

@@ -140,9 +140,9 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
                 </p>
                 <p>
                   <span className="font-semibold text-gray-300">
-                    활동 포인트:
+                    활동 포인트: {userProfile.userActivityPoints}
                   </span>
-                  1,234P
+                  
                 </p>
               </div>
             </div>

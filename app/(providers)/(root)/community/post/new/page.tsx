@@ -5,38 +5,60 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Page from "../../../_components/Page";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddNewPostPage = () => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   // post 등록 버튼
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      if (!title) {
+        toast.error("제목을 작성해주세요.");
+        return;
+      } else if (!content) {
+        toast.error("본문을 작성해주세요.");
+        return;
+      } else {
+        // 글 추가하기
+        const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
+        if (!getUser) return;
+        const userId = getUser.userId;
+        const userName = getUser.userName;
+
+        const data = {
+          userId,
+          userName,
+          title,
+          content,
+        };
+
+        await unifiedAPI.communityApi.createCommunityPost(data);
+        router.push("/community/posts");
+
+        return { userId };
+      }
+    },
+
+    onSuccess: (data) => {
+      if (data) {
+        queryClient.invalidateQueries({
+          queryKey: ["userProfile", { userId: data.userId }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["userPosts", { userId: data.userId }],
+        });
+      }
+    },
+  });
+
   const handleClickAddPostButton = async () => {
-    if (!title) {
-      toast.error("제목을 작성해주세요.");
-      return;
-    } else if (!content) {
-      toast.error("본문을 작성해주세요.");
-      return;
-    } else {
-      // 글 추가하기
-      const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
-      if (!getUser) return;
-      const userId = getUser.userId;
-      const userName = getUser.userName;
-
-      const data = {
-        userId,
-        userName,
-        title,
-        content,
-      };
-
-      await unifiedAPI.communityApi.createCommunityPost(data);
-      router.push("/community/posts");
-    }
+    mutate();
   };
 
   return (
