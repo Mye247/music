@@ -39,9 +39,9 @@ function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
   const closeModal = useModalStore((state) => state.closeModal);
 
   // 바깥영역 클릭시 나가짐
-  const handleToggleModal = () => {
-    closeModal();
-  };
+  // const handleToggleModal = () => {
+  //   closeModal();
+  // };
 
   // 수정 버튼
   const { mutate } = useMutation({

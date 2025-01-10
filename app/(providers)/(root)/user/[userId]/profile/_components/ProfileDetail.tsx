@@ -3,7 +3,12 @@
 import unifiedAPI from "@/api/unifiedAPI";
 import { configs } from "@/config/config";
 import { useModalStore } from "@/zustand/modalStore";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import ProfileEditModal from "./ProfileEditModal";
@@ -50,7 +55,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { data } = useQuery({
+  useQuery({
     queryKey: ["userPosts", { userId: userId }],
     queryFn: async () => {
       const response = await unifiedAPI.profileApi.getUserPosts(
