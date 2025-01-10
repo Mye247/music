@@ -65,7 +65,7 @@ function SearchResultPage(props: SearchResultPageProps) {
     );
     router.push(`/community/post/${search.postId}`);
   };
-
+    
   return (
     <div className="min-h-screen bg-gray-900 text-white py-10 px-4">
       <div className="max-w-4xl mx-auto">
