@@ -16,12 +16,13 @@ function Header() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logOut = useAuthStore((state) => state.logOut);
 
+  // 현재 로그인한 사용자의 데이터
   const { data: loginUserData } = useQuery({
     queryKey: ["loginUserData"],
     queryFn: async () => {
       const result = await unifiedAPI.getUserApi.getLoggedInUserData();
 
-      return result;
+      return result || null;
     },
   });
 

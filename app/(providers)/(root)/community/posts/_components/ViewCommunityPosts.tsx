@@ -20,7 +20,7 @@ function ViewCommunityPosts() {
       const user = await unifiedAPI.getUserApi.getUser();
       const userId = user?.id;
 
-      return userId;
+      return userId || null;
     },
   });
 
