@@ -9,7 +9,6 @@ import { useState } from "react";
 interface SearchResultPageProps {
   params: Promise<{
     searchId: string;
-    searchText: string;
   }>;
 }
 
@@ -25,28 +24,18 @@ interface searchType {
   viewCounter: number;
 }
 
-interface decodedSearchTextType {
-  searchId: string;
-}
-
-function SearchResultPage(props: SearchResultPageProps) {
+function SearchResultPage({ params }: SearchResultPageProps) {
   const router = useRouter();
-
-  const [decodedSearchText, setDecodedSearchText] =
-    useState<decodedSearchTextType>({ searchId: "" });
-
-  const searchText = decodeURIComponent(decodedSearchText.searchId);
+  const [searchText, setSearchText] = useState("");
 
   // 검색 결과 가져오기
   const { data: searchData } = useQuery({
-    queryKey: ["search"],
+    queryKey: ["search", searchText],
     queryFn: async () => {
       // 검색어 가져오기
-      const searchText = await props.params;
-      const decodedSearchText = decodeURIComponent(
-        typeof searchText === "string" ? searchText : ""
-      );
-      setDecodedSearchText({ searchId: searchText.searchId });
+      const searchParams = await params;
+      const decodedSearchText = decodeURIComponent(searchParams.searchId);
+      setSearchText(decodedSearchText);
 
       // 데이터 추출하기
       const { data: searchData } = await supabase
