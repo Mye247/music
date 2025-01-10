@@ -5,22 +5,10 @@ import { supabase } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
 import { useModalStore } from "@/zustand/modalStore";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LogInModal from "../Modals/LogInModal";
 import SearchBar from "./SearchBar";
 import { useQuery } from "@tanstack/react-query";
-
-interface loggedInUser {
-  adminType: boolean;
-  createdAt: string;
-  id: number;
-  userEmail: string;
-  userId: string;
-  userIntroduction: string;
-  userName: string;
-  userProfileImage: string | null;
-}
 
 function Header() {
   // state
