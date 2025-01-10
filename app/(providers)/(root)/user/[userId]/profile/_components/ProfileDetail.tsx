@@ -33,8 +33,6 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
 
   const openModal = useModalStore((state) => state.openModal);
 
-  const [userPosts, setUserPosts] = useState<userPosts[] | null>(null);
-
   const [typeBoolean, setTypeBoolean] = useState(false);
 
   const { data: loginUser } = useQuery({
@@ -46,6 +44,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     },
   });
 
+  // 유저 프로필 정보
   const { data: userProfile } = useQuery({
     queryKey: ["userProfile", { userId: userId }],
     queryFn: async () => {
@@ -53,16 +52,18 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
       return response;
     },
     staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
   });
 
-  useQuery({
+  // 유저 작성글 정보
+  const { data: userPosts } = useQuery<userPosts[] | null>({
     queryKey: ["userPosts", { userId: userId }],
     queryFn: async () => {
       const response = await unifiedAPI.profileApi.getUserPosts(
         userId,
         typeBoolean
       );
-      setUserPosts(response);
+
       return response;
     },
     staleTime: 1000 * 60 * 5,
@@ -142,7 +143,6 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
                   <span className="font-semibold text-gray-300">
                     활동 포인트: {userProfile.userActivityPoints}
                   </span>
-                  
                 </p>
               </div>
             </div>
