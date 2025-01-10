@@ -28,9 +28,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 헤더 섹션 */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-white mb-4">
-              커뮤니티에 오신 것을 환영합니다
-            </h1>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              music 커뮤니티에 오신 것을 환영합니다
+            </h2>
             <p className="text-gray-400 text-lg">
               다양한 의견을 나누고 소통해보세요
             </p>
