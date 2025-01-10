@@ -1,12 +1,13 @@
 "use client";
 
+import unifiedAPI from "@/api/unifiedAPI";
 import { supabase } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
 import { useModalStore } from "@/zustand/modalStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ComponentProps, useState } from "react";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function LogInModal() {
   // 홈으로 이동
@@ -25,20 +26,20 @@ function LogInModal() {
     closeModal();
   };
 
-  const toastComment = <div>로그인에 성공하셨습니다.</div>;
+  // const toastComment = <div>로그인에 성공하셨습니다.</div>;
 
-  const notify = () =>
-    toast.info(toastComment, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+  // const notify = () =>
+  //   toast.info(toastComment, {
+  //     position: "top-right",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: "light",
+  //     transition: Bounce,
+  //   });
 
   // 로그인 버튼
   const handleSubmitSignUpButton: ComponentProps<"form">["onSubmit"] = async (
@@ -55,7 +56,12 @@ function LogInModal() {
 
     if (!result.data.user) return toast.error("회원 정보가 없습니다");
 
-    notify();
+    // 프로필 테이블 정보
+    const myProfile = await unifiedAPI.getUserApi.getLoggedInUserData();
+
+    const userName = myProfile?.userName;
+
+    toast.success(`${userName}님 로그인에 성공하셨습니다.`);
 
     logIn();
 
@@ -107,6 +113,59 @@ function LogInModal() {
           </Link>
           <p>비밀번호 찾기</p>
           <p>아이디 찾기</p>
+        </span>
+      </div>
+      <div
+        className="absolute top-1/2 left-1/2 w-[500px] h-[530px] bg-black -translate-x-1/2 -translate-y-1/2 rounded-2xl text-white shadow-lg p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-center mt-4 font-semibold text-3xl">로그인</h2>
+        <form
+          onSubmit={handleSubmitSignUpButton}
+          className="flex items-center justify-center flex-col gap-6 mt-6"
+        >
+          <div className="grid w-full text-white">
+            <label htmlFor="email" className="mb-1">
+              이메일
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border w-full px-6 py-3 rounded focus:ring-2 focus:ring-blue-500 outline-none transition border-slate-300 text-black"
+            />
+          </div>
+
+          <div className="grid w-full text-white">
+            <label htmlFor="password" className="mb-1">
+              비밀번호
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border w-full px-6 py-3 rounded focus:ring-2 focus:ring-blue-500 outline-none transition border-slate-300 text-black"
+            />
+          </div>
+
+          <button className="border border-white bg-blue-600 text-white w-full h-[60px] mt-5 hover:translate-y-[-0.5rem] transition-all rounded">
+            로그인하기
+          </button>
+        </form>
+        <span className="flex gap-x-5 justify-center mt-6">
+          <Link href={"/sign-up"} onClick={handleToggleModal}>
+            <p className="cursor-pointer hover:text-blue-500 transition">
+              회원가입
+            </p>
+          </Link>
+          <p className="cursor-pointer hover:text-blue-500 transition">
+            비밀번호 찾기
+          </p>
+          <p className="cursor-pointer hover:text-blue-500 transition">
+            아이디 찾기
+          </p>
         </span>
       </div>
     </>

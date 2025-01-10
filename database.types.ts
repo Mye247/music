@@ -9,8 +9,83 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      comment: {
+        Row: {
+          commentId: string
+          content: string
+          createdAt: string
+          id: number
+          postId: number
+          userId: string | null
+          userName: string
+        }
+        Insert: {
+          commentId: string
+          content: string
+          createdAt?: string
+          id?: number
+          postId: number
+          userId?: string | null
+          userName: string
+        }
+        Update: {
+          commentId?: string
+          content?: string
+          createdAt?: string
+          id?: number
+          postId?: number
+          userId?: string | null
+          userName?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_postId_fkey"
+            columns: ["postId"]
+            isOneToOne: false
+            referencedRelation: "community"
+            referencedColumns: ["postId"]
+          },
+        ]
+      }
+      community: {
+        Row: {
+          bed: number | null
+          content: string
+          createdAt: string
+          good: number
+          postId: number
+          title: string
+          userId: string | null
+          userName: string
+          viewCounter: number
+        }
+        Insert: {
+          bed?: number | null
+          content: string
+          createdAt?: string
+          good?: number
+          postId?: number
+          title: string
+          userId?: string | null
+          userName: string
+          viewCounter?: number
+        }
+        Update: {
+          bed?: number | null
+          content?: string
+          createdAt?: string
+          good?: number
+          postId?: number
+          title?: string
+          userId?: string | null
+          userName?: string
+          viewCounter?: number
+        }
+        Relationships: []
+      }
       users: {
         Row: {
+          adminType: boolean
           createdAt: string
           id: number
           userEmail: string
@@ -20,6 +95,7 @@ export type Database = {
           userProfileImage: string
         }
         Insert: {
+          adminType?: boolean
           createdAt?: string
           id?: number
           userEmail: string
@@ -29,6 +105,7 @@ export type Database = {
           userProfileImage?: string
         }
         Update: {
+          adminType?: boolean
           createdAt?: string
           id?: number
           userEmail?: string
