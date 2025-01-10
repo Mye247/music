@@ -136,7 +136,10 @@ function ViewCommunityPosts() {
                     </button>
                   </div>
                 ) : null}
-                <div className="flex items-center justify-between w-full mt-3">
+                <div className="flex items-center justify-between w-full mt-3 gap-3">
+                  <span className=" font-sans text-ls ml-auto">
+                    추천수 {post.good}
+                  </span>
                   <span className=" font-sans text-ls ml-auto">
                     조회수 {post.viewCounter}
                   </span>
