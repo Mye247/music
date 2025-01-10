@@ -60,12 +60,12 @@ function SearchResultPage(props: SearchResultPageProps) {
 
   // 자세히 보기 버튼
   const handleNavigateToPost = async (search: searchType) => {
-    const result = await unifiedAPI.communityApi.updateCommunityViewCounter(
+    await unifiedAPI.communityApi.updateCommunityViewCounter(
       String(search.postId)
     );
     router.push(`/community/post/${search.postId}`);
   };
-    
+
   return (
     <div className="min-h-screen bg-gray-900 text-white py-10 px-4">
       <div className="max-w-4xl mx-auto">
