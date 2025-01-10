@@ -62,8 +62,8 @@ const AddNewPostPage = () => {
   };
 
   return (
-    <Page title="new post">
-      <div className="max-w-[1000px] h-[600px]  p-6 bg-gray-900 text-gray-100 shadow-lg rounded">
+    <Page title="New post">
+      <div className="min-w-[1190px] h-[600px]  p-6 bg-gray-900 text-gray-100 shadow-lg rounded">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-50">
           글 작성하기
         </h2>

@@ -75,8 +75,8 @@ function ViewCommunityPosts() {
 
   return (
     <Page title="Posts">
-      <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px]">
-        <div className="flex gap-3 justify-end mb-4">
+      <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px] min-w-[1190px]">
+        <div className="flex gap-3 justify-end mb-4 ">
           {/* 정렬 옵션 */}
           <p
             onClick={() => handleClickSelectButton(true, "createdAt")}

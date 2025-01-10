@@ -53,6 +53,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     },
     staleTime: 1000 * 60 * 5,
     placeholderData: keepPreviousData,
+    refetchOnWindowFocus: true,
   });
 
   // 유저 작성글 정보
