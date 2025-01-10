@@ -29,7 +29,7 @@ function SearchResultPage({ params }: SearchResultPageProps) {
   const [searchText, setSearchText] = useState("");
 
   // 검색 결과 가져오기
-  const { data: searchData } = useQuery({
+  const { data: searchData, isLoading } = useQuery({
     queryKey: ["search", searchText],
     queryFn: async () => {
       // 검색어 가져오기
@@ -59,7 +59,12 @@ function SearchResultPage({ params }: SearchResultPageProps) {
     <div className="min-h-screen bg-gray-900 text-white py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-6">({searchText}) 의 검색 결과</h2>
-        {searchData && searchData.length > 0 ? (
+        {isLoading ? (
+          <div className="text-center py-20">
+            <h3 className="text-xl font-bold mb-4">검색 중...</h3>
+            <p className="text-gray-400">잠시만 기다려주세요.</p>
+          </div>
+        ) : searchData && searchData.length > 0 ? (
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {searchData.map((search) => (
               <li

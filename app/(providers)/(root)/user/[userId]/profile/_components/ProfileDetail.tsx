@@ -45,7 +45,7 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
   });
 
   // 유저 프로필 정보
-  const { data: userProfile } = useQuery({
+  const { data: userProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ["userProfile", { userId: userId }],
     queryFn: async () => {
       const response = await unifiedAPI.profileApi.getUserProfile(userId);
@@ -56,7 +56,9 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
   });
 
   // 유저 작성글 정보
-  const { data: userPosts } = useQuery<userPosts[] | null>({
+  const { data: userPosts, isLoading: isPostsLoading } = useQuery<
+    userPosts[] | null
+  >({
     queryKey: ["userPosts", { userId: userId }],
     queryFn: async () => {
       const response = await unifiedAPI.profileApi.getUserPosts(
@@ -98,7 +100,11 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
     }
   };
 
-  return userProfile ? (
+  return isProfileLoading || isPostsLoading ? (
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-200">
+      <p className="text-xl">로딩 중입니다...</p>
+    </div>
+  ) : userProfile ? (
     <div className="bg-gray-900 min-h-screen text-gray-200">
       {/* 헤더 */}
       <header className="bg-gray-800 py-4 px-6 shadow-md">
@@ -188,7 +194,14 @@ function ProfileDetail({ userId }: ProfileDetailProps) {
       </div>
     </div>
   ) : (
-    <div>유저 정보가 존재하지 않습니다</div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-200">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-md text-center">
+        <p className="text-xl font-semibold mb-2">
+          유저 정보가 존재하지 않습니다
+        </p>
+        <p className="text-gray-400">요청하신 사용자를 찾을 수 없습니다</p>
+      </div>
+    </div>
   );
 }
 
