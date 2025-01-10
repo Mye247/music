@@ -71,6 +71,9 @@ function ProfileEditModal({ userProfile }: ProfileEditModalProps) {
       queryClient.invalidateQueries({
         queryKey: ["userPosts", { userId: userProfile.userId }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["loginUserData"],
+      });
     },
   });
 
