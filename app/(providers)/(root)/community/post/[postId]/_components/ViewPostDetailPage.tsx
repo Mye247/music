@@ -54,6 +54,15 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
     },
   });
 
+  // 조회수 올리기
+  const { mutate: updateViewCounter } = useMutation({
+    mutationFn: async (postId: string) => {
+      await unifiedAPI.communityApi.updateCommunityViewCounter(postId);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["post", { postId: postId }] }),
+  });
+
   // 데이터 받아 뿌려주기
   useEffect(() => {
     if (isSuccess && getCommunityPost && getCommunityPost.length > 0) {
@@ -61,6 +70,11 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
     }
     setLoading(false);
   }, [isSuccess, getCommunityPost]);
+
+  // 조회수 증가 ( 새로고침시)
+  useEffect(() => {
+    updateViewCounter(postId);
+  }, [postId, updateViewCounter]);
 
   // 추천, 비추천 버튼 1=추천 2=비추천
   const handleClickGoodButton = async (vote: number) => {

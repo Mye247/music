@@ -73,18 +73,6 @@ function ViewCommunityPosts() {
     deletePost(postId);
   };
 
-  // 조회수 올리기
-  const { mutate: updateViewCounter } = useMutation({
-    mutationFn: async (postId: string) => {
-      await unifiedAPI.communityApi.updateCommunityViewCounter(postId);
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
-  });
-
-  const handleClickUpdateViewCounterButton = (postId: string) => {
-    updateViewCounter(postId);
-  };
-
   return (
     <Page title="Posts">
       <div className="bg-gray-900 text-gray-200 p-6 rounded-lg mr-24 h-[550px]">
@@ -119,18 +107,8 @@ function ViewCommunityPosts() {
               className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-between"
             >
               <Link href={`/community/post/${post?.postId}`}>
-                <div
-                  onClick={() =>
-                    handleClickUpdateViewCounterButton(String(post.postId))
-                  }
-                >
-                  <p className="text-xl font-semibold text-white">
-                    {post.title}
-                  </p>
-                  <p className="text-base text-gray-400 w-full">
-                    {post.content}
-                  </p>
-                </div>
+                <p className="text-xl font-semibold text-white">{post.title}</p>
+                <p className="text-base text-gray-400 w-full">{post.content}</p>
               </Link>
               {/* 조회수 스타일 적용 및 오른쪽 정렬 */}
 
