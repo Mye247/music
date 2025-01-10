@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LogInModal from "../Modals/LogInModal";
 import SearchBar from "./SearchBar";
+import { useRouter } from "next/navigation";
 
 interface loggedInUser {
   adminType: boolean;
@@ -40,6 +41,9 @@ function Header() {
     toast.info("로그아웃 하셨습니다.");
     await supabase.auth.signOut();
     logOut();
+
+    // 로그아웃시 해당 페이지 정보 리렌더링
+    window.location.reload();
   };
 
   // 유저 정보 갱신

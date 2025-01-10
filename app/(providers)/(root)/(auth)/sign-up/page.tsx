@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Page from "../../_components/Page";
+import { useModalStore } from "@/zustand/modalStore";
+import LogInModal from "../../_components/Modals/LogInModal";
 
 function SignUpPage() {
   const router = useRouter();
@@ -15,6 +17,8 @@ function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [checkUserPassword, setCheckUserPassword] = useState("");
+
+  const openModal = useModalStore((state) => state.openModal);
 
   // 회원가입 로직
   const handleClickSignUpButton = async (e: React.FormEvent) => {
@@ -66,83 +70,95 @@ function SignUpPage() {
     router.push("/");
   };
 
+  const handleClickOpenLoginModal = () => {
+    openModal({ element: <LogInModal />, backdrop: true });
+  };
+
   return (
-    <Page title="회원가입 페이지">
-      <form
-        className="w-[500px] p-8 bg-black text-gray-200 rounded-lg shadow-lg space-y-6 mx-[213px] font-bold"
-        onSubmit={handleClickSignUpButton}
-      >
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="userName"
-            className="text-sm font-medium text-gray-300"
-          >
-            닉네임
-          </label>
-          <input
-            type="text"
-            id="userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-300"
-          />
-        </div>
+    <Page title="Sign-up">
+      <div className="flex items-center justify-center  px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[600px] w-full space-y-8 bg-white dark:bg-zinc-900 p-10 rounded-xl shadow-2xl">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+              회원가입
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+              이미 계정이 있으신가요?{" "}
+              <button
+                onClick={handleClickOpenLoginModal}
+                className="font-medium text-blue-600 hover:text-blue-500"
+              >
+                로그인하기
+              </button>
+            </p>
+          </div>
+          <form className="mt-8 space-y-6" onSubmit={handleClickSignUpButton}>
+            <div className="rounded-md shadow-sm space-y-4">
+              <div>
+                <label htmlFor="userName" className="sr-only">
+                  닉네임
+                </label>
+                <input
+                  type="text"
+                  id="userName"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="닉네임"
+                  className="appearance-none relative block w-full px-3 py-3 border dark:border-gray-700 dark:bg-zinc-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="userEmail" className="sr-only">
+                  이메일
+                </label>
+                <input
+                  type="email"
+                  id="userEmail"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder="이메일"
+                  className="appearance-none relative block w-full px-3 py-3 border dark:border-gray-700 dark:bg-zinc-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="userPassword" className="sr-only">
+                  비밀번호
+                </label>
+                <input
+                  type="password"
+                  id="userPassword"
+                  value={userPassword}
+                  onChange={(e) => setUserPassword(e.target.value)}
+                  placeholder="비밀번호"
+                  className="appearance-none relative block w-full px-3 py-3 border dark:border-gray-700 dark:bg-zinc-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="checkUserPassword" className="sr-only">
+                  비밀번호 확인
+                </label>
+                <input
+                  type="password"
+                  id="checkUserPassword"
+                  value={checkUserPassword}
+                  onChange={(e) => setCheckUserPassword(e.target.value)}
+                  placeholder="비밀번호 확인"
+                  className="appearance-none relative block w-full px-3 py-3 border dark:border-gray-700 dark:bg-zinc-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="userEmail"
-            className="text-sm font-medium text-gray-300"
-          >
-            이메일
-          </label>
-          <input
-            type="text"
-            id="userEmail"
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-300"
-          />
+            <div>
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              >
+                회원가입
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="userPassword"
-            className="text-sm font-medium text-gray-300"
-          >
-            비밀번호
-          </label>
-          <input
-            type="password"
-            id="userPassword"
-            value={userPassword}
-            onChange={(e) => setUserPassword(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-300"
-          />
-        </div>
-
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="checkUserPassword"
-            className="text-sm font-medium text-gray-300"
-          >
-            비밀번호 확인
-          </label>
-          <input
-            type="password"
-            id="checkUserPassword"
-            value={checkUserPassword}
-            onChange={(e) => setCheckUserPassword(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-300"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-900 text-white rounded-md text-sm font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          회원가입
-        </button>
-      </form>
+      </div>
     </Page>
   );
 }

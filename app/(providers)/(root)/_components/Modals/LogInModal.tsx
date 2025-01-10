@@ -71,61 +71,24 @@ function LogInModal() {
   };
 
   return (
-    <>
+    <div
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center"
+      onClick={handleToggleModal}
+    >
       <div
-        className="absolute top-[50%] left-[50%] w-[500px] h-[530px] bg-black -translate-x-[50%] -translate-y-[50%] rounded-2xl text-white opacity-100"
+        className="absolute top-1/2 left-[700px] transform -translate-x-1/2 -translate-y-1/2 w-[450px] bg-zinc-900/95 rounded-2xl text-white shadow-2xl p-8 border border-zinc-800"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-center mt-10 font-semibold text-3xl">로그인</h2>
+        <h2 className="text-center font-semibold text-3xl mb-8">로그인</h2>
         <form
           onSubmit={handleSubmitSignUpButton}
-          className="flex items-center justify-center flex-col gap-y-5"
+          className="flex flex-col gap-5"
         >
-          <div className="grid mt-10 text-white">
-            <label htmlFor="email">이메일</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="block border w-[400px] px-6 py-3 rounded focus:border-blue-500 outline-none transition border-slate-300 text-black"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password">비밀번호</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="block border w-[400px] px-6 py-3 rounded focus:border-blue-500 outline-none transition border-slate-300 text-black"
-            />
-          </div>
-
-          <button className="border border-white bg-blue-600 text-white w-[400px] h-[60px] mt-5 hover:-translate-y-2 transition-all">
-            로그인하기
-          </button>
-        </form>
-        <span className="flex gap-x-5 justify-center mt-5">
-          <Link href={"/sign-up"} onClick={handleToggleModal}>
-            <p>회원가입</p>
-          </Link>
-          <p>비밀번호 찾기</p>
-          <p>아이디 찾기</p>
-        </span>
-      </div>
-      <div
-        className="absolute top-1/2 left-1/2 w-[500px] h-[530px] bg-black -translate-x-1/2 -translate-y-1/2 rounded-2xl text-white shadow-lg p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-center mt-4 font-semibold text-3xl">로그인</h2>
-        <form
-          onSubmit={handleSubmitSignUpButton}
-          className="flex items-center justify-center flex-col gap-6 mt-6"
-        >
-          <div className="grid w-full text-white">
-            <label htmlFor="email" className="mb-1">
+          <div className="space-y-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-200"
+            >
               이메일
             </label>
             <input
@@ -133,12 +96,15 @@ function LogInModal() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border w-full px-6 py-3 rounded focus:ring-2 focus:ring-blue-500 outline-none transition border-slate-300 text-black"
+              className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 outline-none transition"
             />
           </div>
 
-          <div className="grid w-full text-white">
-            <label htmlFor="password" className="mb-1">
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-200"
+            >
               비밀번호
             </label>
             <input
@@ -146,29 +112,32 @@ function LogInModal() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border w-full px-6 py-3 rounded focus:ring-2 focus:ring-blue-500 outline-none transition border-slate-300 text-black"
+              className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 outline-none transition"
             />
           </div>
 
-          <button className="border border-white bg-blue-600 text-white w-full h-[60px] mt-5 hover:translate-y-[-0.5rem] transition-all rounded">
+          <button className="w-full py-3 mt-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-medium">
             로그인하기
           </button>
         </form>
-        <span className="flex gap-x-5 justify-center mt-6">
-          <Link href={"/sign-up"} onClick={handleToggleModal}>
-            <p className="cursor-pointer hover:text-blue-500 transition">
-              회원가입
-            </p>
+
+        <div className="flex justify-center gap-6 mt-6 text-sm text-gray-400">
+          <Link
+            href={"/sign-up"}
+            onClick={handleToggleModal}
+            className="hover:text-blue-500 transition-colors duration-200"
+          >
+            회원가입
           </Link>
-          <p className="cursor-pointer hover:text-blue-500 transition">
+          <button className="hover:text-blue-500 transition-colors duration-200">
             비밀번호 찾기
-          </p>
-          <p className="cursor-pointer hover:text-blue-500 transition">
+          </button>
+          <button className="hover:text-blue-500 transition-colors duration-200">
             아이디 찾기
-          </p>
-        </span>
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
