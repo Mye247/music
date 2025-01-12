@@ -6,7 +6,10 @@ const serviceKey =
 
 const today = new Date();
 
-const base_date = today.toISOString().split("T")[0].replace(/-/g, "");
+const base_date =
+  today.getFullYear().toString() +
+  (today.getMonth() + 1).toString().padStart(2, "0") +
+  today.getDate().toString().padStart(2, "0");
 
 const base_time =
   today.getHours().toString().padStart(2, "0") +
@@ -21,7 +24,7 @@ const getUltraSrtNcst = async () => {
           serviceKey: serviceKey,
           numOfRows: 10,
           pageNo: 1,
-          base_date: "20250113",
+          base_date: base_date,
           base_time: base_time,
           nx: 55,
           ny: 127,

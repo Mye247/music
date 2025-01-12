@@ -10,13 +10,13 @@ function NewsPage() {
     queryFn: async () => {
       const result = await unifiedAPI.publicApi.getUltraSrtNcst();
 
-      return result || [];
+      return result || {};
     },
   });
 
   console.log(getUltraSrtNcst);
 
-  return <div></div>;
+  return <div>{}</div>;
 }
 
 export default NewsPage;
