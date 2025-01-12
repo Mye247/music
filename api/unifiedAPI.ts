@@ -1,6 +1,7 @@
 import communityApi from "./communityApi";
 import getUserApi from "./getUser";
 import profileApi from "./profileApi";
+import publicApi from "./publicApi";
 import storeApi from "./storeApi";
 
 /**
@@ -11,6 +12,7 @@ const unifiedAPI = {
   communityApi,
   profileApi,
   storeApi,
+  publicApi,
 };
 
 export default unifiedAPI;

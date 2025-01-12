@@ -41,8 +41,10 @@ const buyStoreItem = async (itemId: number, price: number) => {
 
     if (!result) return console.error("에러입니다.");
 
+    // 현재 유저가 보유한 포인트 - 상품 가격
     const updatedPoints = user.userActivityPoints - price;
 
+    // 유저 보유 포인트 업데이트
     await supabase
       .from("users")
       .update({ userActivityPoints: updatedPoints })
