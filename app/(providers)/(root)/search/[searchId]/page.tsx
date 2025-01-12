@@ -1,6 +1,5 @@
 "use client";
 
-import unifiedAPI from "@/api/unifiedAPI";
 import { supabase } from "@/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -49,9 +48,6 @@ function SearchResultPage({ params }: SearchResultPageProps) {
 
   // 자세히 보기 버튼
   const handleNavigateToPost = async (search: searchType) => {
-    await unifiedAPI.communityApi.updateCommunityViewCounter(
-      String(search.postId)
-    );
     router.push(`/community/post/${search.postId}`);
   };
 

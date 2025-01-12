@@ -83,6 +83,33 @@ export type Database = {
         }
         Relationships: []
       }
+      store: {
+        Row: {
+          createdAt: string
+          itemDescription: string | null
+          itemId: number
+          itemImg: string | null
+          itemName: string
+          price: number | null
+        }
+        Insert: {
+          createdAt?: string
+          itemDescription?: string | null
+          itemId?: number
+          itemImg?: string | null
+          itemName: string
+          price?: number | null
+        }
+        Update: {
+          createdAt?: string
+          itemDescription?: string | null
+          itemId?: number
+          itemImg?: string | null
+          itemName?: string
+          price?: number | null
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           adminType: boolean

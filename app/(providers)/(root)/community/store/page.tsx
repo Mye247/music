@@ -1,9 +1,11 @@
 "use client";
 
+import unifiedAPI from "@/api/unifiedAPI";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 function PointStorePage() {
-  const storeItems = [
+  const storeItemss = [
     {
       id: 1,
       name: "프로필 배경 변경",
@@ -24,22 +26,38 @@ function PointStorePage() {
     },
   ];
 
+  // 상점 페이지 정보 가져오기
+  const { data: storeItems } = useQuery({
+    queryKey: ["storeItems"],
+    queryFn: async () => {
+      const result = await unifiedAPI.storeApi.getStoreItems();
+
+      return result;
+    },
+  });
+
+  console.log(storeItems);
+
   return (
     <div className="min-h-screen w-full bg-gray-900 text-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold mb-6 ml-7">포인트 상점</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {storeItems.map((item) => (
+          {storeItemss.map((item) => (
             <div
               key={item.id}
               className="bg-gray-800 backdrop-blur-sm rounded-lg shadow-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700"
             >
               <div className="p-6">
-                <h2 className="text-xl font-semibold mb-2 text-white">{item.name}</h2>
+                <h2 className="text-xl font-semibold mb-2 text-white">
+                  {item.name}
+                </h2>
                 <p className="text-gray-400 mb-4">{item.description}</p>
                 <div className="flex justify-between items-center">
-                  <span className="font-bold text-blue-400">{item.price} P</span>
+                  <span className="font-bold text-blue-400">
+                    {item.price} P
+                  </span>
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">
                     구매하기
                   </button>
