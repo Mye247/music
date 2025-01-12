@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import LogInModal from "../Modals/LogInModal";
 import SearchBar from "./SearchBar";
 import { useQuery } from "@tanstack/react-query";
+import { IoIosMusicalNotes } from "react-icons/io";
 
 function Header() {
   // state
@@ -46,7 +47,9 @@ function Header() {
   return (
     <header className="min-w-full bg-cyan-700 min-h-[65px] flex items-center justify-between">
       <Link href={"/"}>
-        <h1 className="pl-5 font-bold text-xl">music 서비스 (커뮤니티)</h1>
+        <h1 className="pl-5 font-bold text-xl whitespace-nowrap flex items-center gap-x-1">
+          music <IoIosMusicalNotes /> 서비스 (커뮤니티)
+        </h1>
       </Link>
 
       {/* 검색바 */}
