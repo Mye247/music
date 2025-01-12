@@ -90,7 +90,7 @@ export type Database = {
           itemId: number
           itemImg: string | null
           itemName: string
-          price: number | null
+          price: number
         }
         Insert: {
           createdAt?: string
@@ -98,7 +98,7 @@ export type Database = {
           itemId?: number
           itemImg?: string | null
           itemName: string
-          price?: number | null
+          price: number
         }
         Update: {
           createdAt?: string
@@ -106,9 +106,38 @@ export type Database = {
           itemId?: number
           itemImg?: string | null
           itemName?: string
-          price?: number | null
+          price?: number
         }
         Relationships: []
+      }
+      userItems: {
+        Row: {
+          createdAt: string
+          id: number
+          itemId: number
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: number
+          itemId: number
+          userId: string
+        }
+        Update: {
+          createdAt?: string
+          id?: number
+          itemId?: number
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "userItems_itemId_fkey"
+            columns: ["itemId"]
+            isOneToOne: false
+            referencedRelation: "store"
+            referencedColumns: ["itemId"]
+          },
+        ]
       }
       users: {
         Row: {

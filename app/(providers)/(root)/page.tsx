@@ -49,7 +49,7 @@ export default function HomePage() {
                     <span className="text-blue-400">→</span>
                   </div>
                 </Link>
-                
+
                 {/* 여기에 최신 글 목록을 추가할 수 있습니다 */}
                 <div className="space-y-4 mb-8">
                   {/* 글 목록을 위한 공간 */}
@@ -60,8 +60,18 @@ export default function HomePage() {
                   className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                   <span>글 작성하기</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 </button>
               </div>
@@ -82,8 +92,57 @@ export default function HomePage() {
 
                 <button className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <span>글 더보기</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            {/* 포인트 상점 섹션 */}
+            <article className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300">
+              <div className="p-6">
+                <Link href={"/community/store"} className="group">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                      포인트 상점
+                    </h2>
+                    <span className="text-blue-400">→</span>
+                  </div>
+                </Link>
+
+                {/* 여기에 최신 글 목록을 추가할 수 있습니다 */}
+                <div className="space-y-4 mb-8">
+                  {/* 글 목록을 위한 공간 */}
+                </div>
+
+                <button
+                  onClick={handleClickCreatePostButton}
+                  className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                >
+                  <span>상품 구매하기</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 </button>
               </div>
