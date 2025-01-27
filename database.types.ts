@@ -180,7 +180,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_chosung: {
+        Args: {
+          full_name: string
+        }
+        Returns: string
+      }
+      get_initials: {
+        Args: {
+          input_text: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

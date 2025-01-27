@@ -23,7 +23,7 @@ function PointStorePage() {
   return (
     <div className="min-h-screen w-full bg-gray-900 text-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 ml-7">포인트 상점</h2>
+        <h2 className="text-3xl font-bold mb-6 ml-7">Point store</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {storeItems?.map((item) => (

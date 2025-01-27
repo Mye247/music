@@ -103,7 +103,7 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
     <main className="bg-gray-900 min-h-screen py-4 px-2 min-w-[1190px] rounded-lg">
       {/* 게시글 헤더 */}
       <div className="border-b-2 border-blue-500 pb-2 mb-4">
-        <div className="text-2xl font-bold text-blue-400">커뮤니티</div>
+        <div className="text-2xl font-bold text-blue-400 pl-3">music!</div>
       </div>
 
       {/* 게시글 제목 영역 */}

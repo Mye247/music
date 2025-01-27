@@ -33,10 +33,18 @@ const buyStoreItem = async (itemId: number, price: number) => {
 
   const store = response.data;
 
+  const response1 = await supabase
+    .from("userItems")
+    .select("*")
+    .eq("itemId", itemId)
+    .single();
+
+  const userItem = response1.data;
+
   if (!store) return console.error("store 정보가 없습니다");
 
-  // 유저 보유 포인트가 가격보다 많다면 구매
-  if (store?.price <= user.userActivityPoints) {
+  // 유저 보유 포인트가 가격보다 많고, 이미 구매한 아이템이 없다면 구매s
+  if (store?.price <= user.userActivityPoints && !!userItem === false) {
     const result = await supabase.from("userItems").insert({ itemId, userId });
 
     if (!result) return console.error("에러입니다.");
@@ -51,7 +59,7 @@ const buyStoreItem = async (itemId: number, price: number) => {
       .eq("userId", userId);
   } else {
     // 유저 보유 포인트가 가격보다 적다면 실패
-    return toast.error("보유중인 포인트가 부족합니다.");
+    return toast.error("보유중인 포인트가 부족하거나 이미 구매한 상품입니다.");
   }
 
   return toast.success("상품 구매에 성공하셨습니다.");
