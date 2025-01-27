@@ -108,7 +108,7 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
 
       {/* 게시글 제목 영역 */}
       <div className="border-t border-b border-gray-700 bg-gray-800 p-3">
-        <h1 className="text-xl font-bold text-gray-100">{post.title}</h1>
+        <h2 className="text-xl font-bold text-gray-100">{post.title}</h2>
         <div className="flex justify-between mt-2 text-sm text-gray-400">
           <div className="flex items-center gap-2">
             <span>작성자: {post.userName}</span>
