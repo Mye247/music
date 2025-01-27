@@ -54,6 +54,15 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
     },
   });
 
+  // 조회수 올리기
+  const { mutate: updateViewCounter } = useMutation({
+    mutationFn: async (postId: string) => {
+      await unifiedAPI.communityApi.updateCommunityViewCounter(postId);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["post", { postId: postId }] }),
+  });
+
   // 데이터 받아 뿌려주기
   useEffect(() => {
     if (isSuccess && getCommunityPost && getCommunityPost.length > 0) {
@@ -61,6 +70,11 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
     }
     setLoading(false);
   }, [isSuccess, getCommunityPost]);
+
+  // 조회수 증가 ( 새로고침시)
+  useEffect(() => {
+    updateViewCounter(postId);
+  }, [postId, updateViewCounter]);
 
   // 추천, 비추천 버튼 1=추천 2=비추천
   const handleClickGoodButton = async (vote: number) => {
@@ -86,15 +100,15 @@ function ViewPostDetailPage(props: PostDetailPageProps) {
   }
 
   return (
-    <main className="bg-gray-900 min-h-screen py-4 px-2 max-w-[1000px] rounded-lg">
+    <main className="bg-gray-900 min-h-screen py-4 px-2 min-w-[1190px] rounded-lg">
       {/* 게시글 헤더 */}
       <div className="border-b-2 border-blue-500 pb-2 mb-4">
-        <div className="text-2xl font-bold text-blue-400">커뮤니티</div>
+        <div className="text-2xl font-bold text-blue-400 pl-3">music!</div>
       </div>
 
       {/* 게시글 제목 영역 */}
       <div className="border-t border-b border-gray-700 bg-gray-800 p-3">
-        <h1 className="text-xl font-bold text-gray-100">{post.title}</h1>
+        <h2 className="text-xl font-bold text-gray-100">{post.title}</h2>
         <div className="flex justify-between mt-2 text-sm text-gray-400">
           <div className="flex items-center gap-2">
             <span>작성자: {post.userName}</span>

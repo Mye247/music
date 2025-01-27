@@ -1,6 +1,5 @@
 "use client";
 
-import unifiedAPI from "@/api/unifiedAPI";
 import { supabase } from "@/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,6 @@ import { useState } from "react";
 interface SearchResultPageProps {
   params: Promise<{
     searchId: string;
-    searchText: string;
   }>;
 }
 
@@ -25,28 +23,18 @@ interface searchType {
   viewCounter: number;
 }
 
-interface decodedSearchTextType {
-  searchId: string;
-}
-
-function SearchResultPage(props: SearchResultPageProps) {
+function SearchResultPage({ params }: SearchResultPageProps) {
   const router = useRouter();
-
-  const [decodedSearchText, setDecodedSearchText] =
-    useState<decodedSearchTextType>({ searchId: "" });
-
-  const searchText = decodeURIComponent(decodedSearchText.searchId);
+  const [searchText, setSearchText] = useState("");
 
   // 검색 결과 가져오기
-  const { data: searchData } = useQuery({
-    queryKey: ["search"],
+  const { data: searchData, isLoading } = useQuery({
+    queryKey: ["search", searchText],
     queryFn: async () => {
       // 검색어 가져오기
-      const searchText = await props.params;
-      const decodedSearchText = decodeURIComponent(
-        typeof searchText === "string" ? searchText : ""
-      );
-      setDecodedSearchText({ searchId: searchText.searchId });
+      const searchParams = await params;
+      const decodedSearchText = decodeURIComponent(searchParams.searchId);
+      setSearchText(decodedSearchText);
 
       // 데이터 추출하기
       const { data: searchData } = await supabase
@@ -60,17 +48,19 @@ function SearchResultPage(props: SearchResultPageProps) {
 
   // 자세히 보기 버튼
   const handleNavigateToPost = async (search: searchType) => {
-    await unifiedAPI.communityApi.updateCommunityViewCounter(
-      String(search.postId)
-    );
     router.push(`/community/post/${search.postId}`);
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white py-10 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold mb-6">({searchText}) 의 검색 결과</h2>
-        {searchData && searchData.length > 0 ? (
+        {isLoading ? (
+          <div className="text-center py-20">
+            <h3 className="text-xl font-bold mb-4">검색 중...</h3>
+            <p className="text-gray-400">잠시만 기다려주세요.</p>
+          </div>
+        ) : searchData && searchData.length > 0 ? (
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {searchData.map((search) => (
               <li

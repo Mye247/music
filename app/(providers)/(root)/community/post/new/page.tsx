@@ -5,43 +5,65 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Page from "../../../_components/Page";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddNewPostPage = () => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   // post 등록 버튼
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      if (!title) {
+        toast.error("제목을 작성해주세요.");
+        return;
+      } else if (!content) {
+        toast.error("본문을 작성해주세요.");
+        return;
+      } else {
+        // 글 추가하기
+        const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
+        if (!getUser) return;
+        const userId = getUser.userId;
+        const userName = getUser.userName;
+
+        const data = {
+          userId,
+          userName,
+          title,
+          content,
+        };
+
+        await unifiedAPI.communityApi.createCommunityPost(data);
+        router.push("/community/posts");
+
+        return { userId };
+      }
+    },
+
+    onSuccess: (data) => {
+      if (data) {
+        queryClient.invalidateQueries({
+          queryKey: ["userProfile", { userId: data.userId }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["userPosts", { userId: data.userId }],
+        });
+      }
+    },
+  });
+
   const handleClickAddPostButton = async () => {
-    if (!title) {
-      toast.error("제목을 작성해주세요.");
-      return;
-    } else if (!content) {
-      toast.error("본문을 작성해주세요.");
-      return;
-    } else {
-      // 글 추가하기
-      const getUser = await unifiedAPI.getUserApi.getLoggedInUserData();
-      if (!getUser) return;
-      const userId = getUser.userId;
-      const userName = getUser.userName;
-
-      const data = {
-        userId,
-        userName,
-        title,
-        content,
-      };
-
-      await unifiedAPI.communityApi.createCommunityPost(data);
-      router.push("/community/posts");
-    }
+    mutate();
   };
 
   return (
-    <Page title="new post">
-      <div className="max-w-[1000px] h-[600px]  p-6 bg-gray-900 text-gray-100 shadow-lg rounded">
+    <Page title="New post">
+      <div className="min-w-[1190px] h-[600px]  p-6 bg-gray-900 text-gray-100 shadow-lg rounded">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-50">
           글 작성하기
         </h2>

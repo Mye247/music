@@ -83,11 +83,68 @@ export type Database = {
         }
         Relationships: []
       }
+      store: {
+        Row: {
+          createdAt: string
+          itemDescription: string | null
+          itemId: number
+          itemImg: string | null
+          itemName: string
+          price: number
+        }
+        Insert: {
+          createdAt?: string
+          itemDescription?: string | null
+          itemId?: number
+          itemImg?: string | null
+          itemName: string
+          price: number
+        }
+        Update: {
+          createdAt?: string
+          itemDescription?: string | null
+          itemId?: number
+          itemImg?: string | null
+          itemName?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      userItems: {
+        Row: {
+          createdAt: string
+          id: number
+          itemId: number
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: number
+          itemId: number
+          userId: string
+        }
+        Update: {
+          createdAt?: string
+          id?: number
+          itemId?: number
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "userItems_itemId_fkey"
+            columns: ["itemId"]
+            isOneToOne: false
+            referencedRelation: "store"
+            referencedColumns: ["itemId"]
+          },
+        ]
+      }
       users: {
         Row: {
           adminType: boolean
           createdAt: string
           id: number
+          userActivityPoints: number
           userEmail: string
           userId: string
           userIntroduction: string
@@ -98,6 +155,7 @@ export type Database = {
           adminType?: boolean
           createdAt?: string
           id?: number
+          userActivityPoints?: number
           userEmail: string
           userId: string
           userIntroduction?: string
@@ -108,6 +166,7 @@ export type Database = {
           adminType?: boolean
           createdAt?: string
           id?: number
+          userActivityPoints?: number
           userEmail?: string
           userId?: string
           userIntroduction?: string
@@ -121,7 +180,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_chosung: {
+        Args: {
+          full_name: string
+        }
+        Returns: string
+      }
+      get_initials: {
+        Args: {
+          input_text: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

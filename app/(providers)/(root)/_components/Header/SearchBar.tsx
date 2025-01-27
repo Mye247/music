@@ -24,12 +24,20 @@ function SearchBar() {
     }
   };
 
+  // 엔터키 검색 이벤트
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleClickSearchButton();
+    }
+  };
+
   return (
     <div className="relative w-full max-w-md mx-auto ml-80">
       <input
         type="text"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="검색어를 입력하세요"
         className="w-full p-3 pl-10 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />

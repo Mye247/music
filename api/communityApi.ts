@@ -83,7 +83,22 @@ const createCommunityPost = async (data: {
   title: string;
   content: string;
 }) => {
+  // 글 작성 데이터 추가하기
   const response = await supabase.from("community").insert(data);
+
+  // 글 작성 포인트 적립
+  const userResponse = await supabase
+    .from("users")
+    .select("userActivityPoints")
+    .eq("userId", data.userId)
+    .single();
+
+  const currentPoints = userResponse.data?.userActivityPoints || 0;
+
+  await supabase
+    .from("users")
+    .update({ userActivityPoints: currentPoints + 30 })
+    .eq("userId", data.userId);
 
   return response.data;
 };
@@ -150,6 +165,20 @@ const createPostComment = async (
   } else if (typeNumber === 1) {
     // 작성
     const response = await supabase.from("comment").insert(data);
+
+    // 댓글 작성 포인트 적립
+    const userResponse = await supabase
+      .from("users")
+      .select("userActivityPoints")
+      .eq("userId", userId)
+      .single();
+
+    const currentPoints = userResponse.data?.userActivityPoints || 0;
+
+    await supabase
+      .from("users")
+      .update({ userActivityPoints: currentPoints + 10 })
+      .eq("userId", userId);
     return response.data;
   }
 };
